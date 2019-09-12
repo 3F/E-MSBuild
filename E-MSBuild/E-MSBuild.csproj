@@ -68,10 +68,10 @@
       <PackagePath></PackagePath>
     </None>
   </ItemGroup>
-
+  
   <ItemGroup>
-    <ProjectReference Include="..\LSender\LSender.csproj" />
-    <ProjectReference Include="..\Varhead\Varhead.csproj" />
+    <ProjectReference Include="$(SolutionDir)\LSender\LSender\LSender.csproj" />
+    <ProjectReference Include="$(SolutionDir)\Varhead\Varhead\Varhead.csproj" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net40' ">

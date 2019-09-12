@@ -14,8 +14,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\E-MSBuild\E-MSBuild.csproj" />
-    <ProjectReference Include="..\Varhead\Varhead.csproj" />
+    <ProjectReference Include="$(SolutionDir)\E-MSBuild\E-MSBuild.csproj" />
+    <ProjectReference Include="$(SolutionDir)\LSender\LSender\LSender.csproj" />
+    <ProjectReference Include="$(SolutionDir)\Varhead\Varhead\Varhead.csproj" />
   </ItemGroup>
 
 </Project>
