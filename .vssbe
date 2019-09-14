@@ -1,0 +1,390 @@
+﻿{
+  "Header": {
+    "_": [
+      " It requires vsSolutionBuildEvent engine.",
+      " Free plugin for Visual Studio or MSBuild Tools:",
+      "  * https://github.com/3F/vsSolutionBuildEvent",
+      "  * https://visualstudiogallery.msdn.microsoft.com/0d1dbfd7-ed8a-40af-ae39-281bfeca2334/",
+      " Feedback: github.com/3F  or entry.reg@gmail.com"
+    ],
+    "Compatibility": "0.9"
+  },
+  "Components": [
+    {
+      "ClassName": "InternalComponent",
+      "Enabled": true
+    },
+    {
+      "ClassName": "UserVariableComponent",
+      "Enabled": true
+    },
+    {
+      "ClassName": "TryComponent",
+      "Enabled": true
+    },
+    {
+      "ClassName": "OWPComponent",
+      "Enabled": true
+    },
+    {
+      "ClassName": "NuGetComponent",
+      "Enabled": true
+    },
+    {
+      "ClassName": "FunctionComponent",
+      "Enabled": true
+    },
+    {
+      "ClassName": "FileComponent",
+      "Enabled": true
+    },
+    {
+      "ClassName": "DTEComponent",
+      "Enabled": true
+    },
+    {
+      "ClassName": "BuildComponent",
+      "Enabled": true
+    },
+    {
+      "ClassName": "BoxComponent",
+      "Enabled": true
+    },
+    {
+      "ClassName": "SevenZipComponent",
+      "Enabled": true
+    },
+    {
+      "ClassName": "ConditionComponent",
+      "Enabled": true
+    },
+    {
+      "ClassName": "MSBuildComponent",
+      "Enabled": true
+    },
+    {
+      "ClassName": "CommentComponent",
+      "Enabled": true
+    }
+  ],
+  "PreBuild": [
+    {
+      "Enabled": true,
+      "Name": "ActDef",
+      "Caption": "Prepare data",
+      "SupportMSBuild": true,
+      "SupportSBEScripts": true,
+      "IgnoreIfBuildFailed": false,
+      "BuildType": "Common",
+      "Confirmation": false,
+      "ToConfiguration": [],
+      "ExecutionOrder": {
+        "$type": "net.r_eg.vsSBE.Events.ExecutionOrder[], vsSolutionBuildEvent",
+        "$values": []
+      },
+      "Process": {
+        "$type": "net.r_eg.vsSBE.Events.EventProcess, vsSolutionBuildEvent",
+        "Waiting": true,
+        "Hidden": true,
+        "TimeLimit": 30
+      },
+      "Mode": {
+        "$type": "net.r_eg.vsSBE.Events.ModeScript, vsSolutionBuildEvent",
+        "Type": "Script",
+        "Command": "#[$(dbin = \"bin/$(Configuration)/\")]\n\n#[( $(Configuration.Substring(1, 3)) == \"CI_\" ) { \n    $(isCIBuild = 'true')\n}else{ \n    $(isCIBuild = 'false')\n}]\n\n$(revDeltaBase  = \"2019/09/09\")\n$(revDeltaMin   = $([System.Math]::Pow(10, 3)))\n$(revDeltaMax   = 65534) #[\" limit of AssemblyVersion - 65534 max allowed ! that is 65536 (0-65535) is not a correct range, (2^16 - 2) \"]\n\n$(pDir  = \"E-MSBuild\")\n$(odir  = \"$(dbin)raw/\")\n\n#[var +revBuild]\n#[var +bSha1]\n#[var +bName]\n#[var +bRevc]\n\n#[var pVer = #[File get(\".version\")]]\n\n#[IO delete.directory(\"$(dbin)\", true)]\n#[IO copy.directory(\"\", \"$(dbin)\", true)]\n\n",
+        "Command__": [
+          "#[$(dbin = \"bin/$(Configuration)/\")]",
+          "",
+          "#[( $(Configuration.Substring(1, 3)) == \"CI_\" ) { ",
+          "    $(isCIBuild = 'true')",
+          "}else{ ",
+          "    $(isCIBuild = 'false')",
+          "}]",
+          "",
+          "$(revDeltaBase  = \"2019/09/09\")",
+          "$(revDeltaMin   = $([System.Math]::Pow(10, 3)))",
+          "$(revDeltaMax   = 65534) #[\" limit of AssemblyVersion - 65534 max allowed ! that is 65536 (0-65535) is not a correct range, (2^16 - 2) \"]",
+          "",
+          "$(pDir  = \"E-MSBuild\")",
+          "$(odir  = \"$(dbin)raw/\")",
+          "",
+          "#[var +revBuild]",
+          "#[var +bSha1]",
+          "#[var +bName]",
+          "#[var +bRevc]",
+          "",
+          "#[var pVer = #[File get(\".version\")]]",
+          "",
+          "#[IO delete.directory(\"$(dbin)\", true)]",
+          "#[IO copy.directory(\"\", \"$(dbin)\", true)]",
+          "",
+          ""
+        ]
+      }
+    },
+    {
+      "Enabled": true,
+      "Name": "ActSub",
+      "Caption": "Submodules and dep packages",
+      "SupportMSBuild": true,
+      "SupportSBEScripts": true,
+      "IgnoreIfBuildFailed": false,
+      "BuildType": "Common",
+      "Confirmation": false,
+      "ToConfiguration": [],
+      "ExecutionOrder": {
+        "$type": "net.r_eg.vsSBE.Events.ExecutionOrder[], vsSolutionBuildEvent",
+        "$values": []
+      },
+      "Process": {
+        "$type": "net.r_eg.vsSBE.Events.EventProcess, vsSolutionBuildEvent",
+        "Waiting": true,
+        "Hidden": true,
+        "TimeLimit": 30
+      },
+      "Mode": {
+        "$type": "net.r_eg.vsSBE.Events.ModeScript, vsSolutionBuildEvent",
+        "Type": "Script",
+        "Command": "#[( !(#[IO exists.file(\"Varhead/Varhead.sln\")]) )\n{\n    #[File call(\"git\", \"submodule update --init --recursive Varhead\", 1000)]\n}]\n\n#[\" Packages \"]\n\n#[( !(#[IO exists.file(\"packages/__checked\")]) )\n{\n    #[File call(\"tools\\hmsbuild.bat\", \"-t:restore /v:q /nologo /p:Configuration=$(Configuration) /p:Platform=\\\"Any CPU\\\"\", 1000)]\n    \n    #[IO copy.directory(\"\", \"packages/\", true)]\n    #[File write(\"packages/__checked\"): ]\n}]",
+        "Command__": [
+          "#[( !(#[IO exists.file(\"Varhead/Varhead.sln\")]) )",
+          "{",
+          "    #[File call(\"git\", \"submodule update --init --recursive Varhead\", 1000)]",
+          "}]",
+          "",
+          "#[\" Packages \"]",
+          "",
+          "#[( !(#[IO exists.file(\"packages/__checked\")]) )",
+          "{",
+          "    #[File call(\"tools\\hmsbuild.bat\", \"-t:restore /v:q /nologo /p:Configuration=$(Configuration) /p:Platform=\\\"Any CPU\\\"\", 1000)]",
+          "    ",
+          "    #[IO copy.directory(\"\", \"packages/\", true)]",
+          "    #[File write(\"packages/__checked\"): ]",
+          "}]"
+        ]
+      }
+    },
+    {
+      "Enabled": true,
+      "Name": "ActVersion",
+      "Caption": "Update Version",
+      "SupportMSBuild": true,
+      "SupportSBEScripts": true,
+      "IgnoreIfBuildFailed": false,
+      "BuildType": "Common",
+      "Confirmation": false,
+      "ToConfiguration": [],
+      "ExecutionOrder": {
+        "$type": "net.r_eg.vsSBE.Events.ExecutionOrder[], vsSolutionBuildEvent",
+        "$values": []
+      },
+      "Process": {
+        "$type": "net.r_eg.vsSBE.Events.EventProcess, vsSolutionBuildEvent",
+        "Waiting": true,
+        "Hidden": true,
+        "TimeLimit": 30
+      },
+      "Mode": {
+        "$type": "net.r_eg.vsSBE.Events.ModeScript, vsSolutionBuildEvent",
+        "Type": "Script",
+        "Command": "#[var tpl = // This code was generated by a vsSolutionBuildEvent. \n// Changes to this file may cause incorrect behavior and will be lost if the code is regenerated.\nnamespace net.r_eg.EvMSBuild\n{\n    using System;\n\n    public struct EvMSBuildVersion\n    {\n        public static readonly Version number = new Version(S_NUM_REV);\n\n        public const string S_NUM = \"%S_NUM%\";\n        public const string S_REV = \"%S_REV%\";\n\n        public const string S_NUM_REV = S_NUM + \".\" + S_REV;\n\n        public const string B_SHA1 = \"%B_SHA1%\";\n        public const string B_NAME = \"%B_NAME%\";\n        public const string B_REVC = \"%B_REVC%\";\n\n        internal const string S_INFO      = S_NUM_REV + \"+\" + B_SHA1;\n        internal const string S_INFO_FULL = S_INFO + \":\" + B_NAME + \"-\" + B_REVC;\n    }\n}]\n\n\n#[\" \n    Calculate revision\n\"]\n#[var tBase     = $([System.DateTime]::Parse('$(revDeltaBase)').ToBinary())]\n#[var tNow      = $([System.DateTime]::UtcNow.Ticks)]\n#[var revBuild  = #[$(\n                    [System.TimeSpan]::FromTicks('$(\n                        [MSBuild]::Subtract($(tNow), $(tBase))\n                    )')\n                    .TotalMinutes.ToString('0'))]]\n                     \n#[var revBuild  = #[$(\n                    [MSBuild]::Add(\n                        $(revDeltaMin), \n                        $([MSBuild]::Modulo(\n                            $(revBuild), \n                            $([MSBuild]::Subtract(\n                                $(revDeltaMax), $(revDeltaMin)\n                             ))\n                         ))\n                     )\n                   )]\n]\n\n#[\" \n    Remove placeholders\n\"]\n#[var tpl = $(tpl.Replace(\"%S_NUM%\", \"$(pVer)\").Replace(\"%S_REV%\", \"$(revBuild)\"))]\n\n#[\" \n    Checking of the git to define sha1, branch name, etc.\n\"]\n#[var isGit = #[IO cmd(\"git rev-parse 2>&1\")]]\n#[( $(isGit) == \"\" )\n{\n    #[var bSha1 = #[IO sout(\"git\", \"rev-parse --short HEAD\")]]\n    #[var bName = #[IO sout(\"git\", \"rev-parse --abbrev-ref HEAD\")]]\n    #[var bRevc = #[IO sout(\"git\", \"rev-list HEAD --count\")]]\n    \n    #[($(bName) == \"HEAD\") {\n        #[var bName = $(APPVEYOR_REPO_BRANCH)]\n    }]\n}\nelse {\n    #[$(bSha1 = '-')] #[$(bName = '-')] #[$(bRevc = '-')]\n}]\n\n#[var tpl = #[$(tpl.Replace(\"%B_SHA1%\", \"#[var bSha1]\")\n                   .Replace(\"%B_NAME%\", \"#[var bName]\")\n                   .Replace(\"%B_REVC%\", \"#[var bRevc]\") )]]\n\n#[\" \n    Save result\n\"]\n\n#[( $(isCIBuild) ) { \n    #[File write(\"$(pDir)/EvMSBuildVersion.cs\"):#[var tpl]]\n}else{\n    #[IO replace.Regex(\"$(pDir)/EvMSBuildVersion.cs\", \"(\\sS_NUM\\s=).+?\\\";\", \"$1 \\\"$(pVer)\\\";\")]\n}]\n\n#[IO replace.Regex(\"$(pDir)/E-MSBuild.csproj\", \"<Version>.+?</Version>\", \"<Version>$(pVer)</Version>\")]",
+        "Command__": [
+          "#[var tpl = // This code was generated by a vsSolutionBuildEvent. ",
+          "// Changes to this file may cause incorrect behavior and will be lost if the code is regenerated.",
+          "namespace net.r_eg.EvMSBuild",
+          "{",
+          "    using System;",
+          "",
+          "    public struct EvMSBuildVersion",
+          "    {",
+          "        public static readonly Version number = new Version(S_NUM_REV);",
+          "",
+          "        public const string S_NUM = \"%S_NUM%\";",
+          "        public const string S_REV = \"%S_REV%\";",
+          "",
+          "        public const string S_NUM_REV = S_NUM + \".\" + S_REV;",
+          "",
+          "        public const string B_SHA1 = \"%B_SHA1%\";",
+          "        public const string B_NAME = \"%B_NAME%\";",
+          "        public const string B_REVC = \"%B_REVC%\";",
+          "",
+          "        internal const string S_INFO      = S_NUM_REV + \"+\" + B_SHA1;",
+          "        internal const string S_INFO_FULL = S_INFO + \":\" + B_NAME + \"-\" + B_REVC;",
+          "    }",
+          "}]",
+          "",
+          "",
+          "#[\" ",
+          "    Calculate revision",
+          "\"]",
+          "#[var tBase     = $([System.DateTime]::Parse('$(revDeltaBase)').ToBinary())]",
+          "#[var tNow      = $([System.DateTime]::UtcNow.Ticks)]",
+          "#[var revBuild  = #[$(",
+          "                    [System.TimeSpan]::FromTicks('$(",
+          "                        [MSBuild]::Subtract($(tNow), $(tBase))",
+          "                    )')",
+          "                    .TotalMinutes.ToString('0'))]]",
+          "                     ",
+          "#[var revBuild  = #[$(",
+          "                    [MSBuild]::Add(",
+          "                        $(revDeltaMin), ",
+          "                        $([MSBuild]::Modulo(",
+          "                            $(revBuild), ",
+          "                            $([MSBuild]::Subtract(",
+          "                                $(revDeltaMax), $(revDeltaMin)",
+          "                             ))",
+          "                         ))",
+          "                     )",
+          "                   )]",
+          "]",
+          "",
+          "#[\" ",
+          "    Remove placeholders",
+          "\"]",
+          "#[var tpl = $(tpl.Replace(\"%S_NUM%\", \"$(pVer)\").Replace(\"%S_REV%\", \"$(revBuild)\"))]",
+          "",
+          "#[\" ",
+          "    Checking of the git to define sha1, branch name, etc.",
+          "\"]",
+          "#[var isGit = #[IO cmd(\"git rev-parse 2>&1\")]]",
+          "#[( $(isGit) == \"\" )",
+          "{",
+          "    #[var bSha1 = #[IO sout(\"git\", \"rev-parse --short HEAD\")]]",
+          "    #[var bName = #[IO sout(\"git\", \"rev-parse --abbrev-ref HEAD\")]]",
+          "    #[var bRevc = #[IO sout(\"git\", \"rev-list HEAD --count\")]]",
+          "    ",
+          "    #[($(bName) == \"HEAD\") {",
+          "        #[var bName = $(APPVEYOR_REPO_BRANCH)]",
+          "    }]",
+          "}",
+          "else {",
+          "    #[$(bSha1 = '-')] #[$(bName = '-')] #[$(bRevc = '-')]",
+          "}]",
+          "",
+          "#[var tpl = #[$(tpl.Replace(\"%B_SHA1%\", \"#[var bSha1]\")",
+          "                   .Replace(\"%B_NAME%\", \"#[var bName]\")",
+          "                   .Replace(\"%B_REVC%\", \"#[var bRevc]\") )]]",
+          "",
+          "#[\" ",
+          "    Save result",
+          "\"]",
+          "",
+          "#[( $(isCIBuild) ) { ",
+          "    #[File write(\"$(pDir)/EvMSBuildVersion.cs\"):#[var tpl]]",
+          "}else{",
+          "    #[IO replace.Regex(\"$(pDir)/EvMSBuildVersion.cs\", \"(\\sS_NUM\\s=).+?\\\";\", \"$1 \\\"$(pVer)\\\";\")]",
+          "}]",
+          "",
+          "#[IO replace.Regex(\"$(pDir)/E-MSBuild.csproj\", \"<Version>.+?</Version>\", \"<Version>$(pVer)</Version>\")]"
+        ]
+      }
+    },
+    {
+      "Enabled": true,
+      "Name": "ActInfo",
+      "Caption": "Compile info",
+      "SupportMSBuild": true,
+      "SupportSBEScripts": true,
+      "IgnoreIfBuildFailed": false,
+      "BuildType": "Common",
+      "Confirmation": false,
+      "ToConfiguration": [],
+      "ExecutionOrder": {
+        "$type": "net.r_eg.vsSBE.Events.ExecutionOrder[], vsSolutionBuildEvent",
+        "$values": []
+      },
+      "Process": {
+        "$type": "net.r_eg.vsSBE.Events.EventProcess, vsSolutionBuildEvent",
+        "Waiting": true,
+        "Hidden": true,
+        "TimeLimit": 30
+      },
+      "Mode": {
+        "$type": "net.r_eg.vsSBE.Events.ModeScript, vsSolutionBuildEvent",
+        "Type": "Script",
+        "Command": "#[var buildInfo =  $([System.String]::Concat(\"  \"))\n    S_NUM:          #[$(pVer)]\n    \n    S_REV:          #[$(revBuild)]\n    \n    S_NUM_REV:      #[$(pVer)].#[$(revBuild)]\n    \n    bSha1:          #[$(bSha1)]\n    \n    bName:          #[$(bName)]\n    \n    bRevc:          #[$(bRevc)]\n    \n    Configuration:  #[$(Configuration)]\n    \n    revDeltaBase:   #[$(revDeltaBase)]\n    \n    revDeltaMin:    #[$(revDeltaMin)]\n    \n    revDeltaMax:    #[$(revDeltaMax)]\n    \n    \n                    :: generated by a vsSolutionBuildEvent v#[$(vsSolutionBuildEvent)]\n]\n\n#[( $(isCIBuild) ) { \n    #[IO replace.Regex(\"$(pDir)/E-MSBuild.csproj\", \"<BuildInfoVSSBE>[\\s\\S]*?</BuildInfoVSSBE>\", \"<BuildInfoVSSBE>$(buildInfo)</BuildInfoVSSBE>\")]\n}else{\n    #[IO replace.Regex(\"$(pDir)/E-MSBuild.csproj\", \"<BuildInfoVSSBE>[\\s\\S]*?</BuildInfoVSSBE>\", \"<BuildInfoVSSBE></BuildInfoVSSBE>\")]\n}]",
+        "Command__": [
+          "#[var buildInfo =  $([System.String]::Concat(\"  \"))",
+          "    S_NUM:          #[$(pVer)]",
+          "    ",
+          "    S_REV:          #[$(revBuild)]",
+          "    ",
+          "    S_NUM_REV:      #[$(pVer)].#[$(revBuild)]",
+          "    ",
+          "    bSha1:          #[$(bSha1)]",
+          "    ",
+          "    bName:          #[$(bName)]",
+          "    ",
+          "    bRevc:          #[$(bRevc)]",
+          "    ",
+          "    Configuration:  #[$(Configuration)]",
+          "    ",
+          "    revDeltaBase:   #[$(revDeltaBase)]",
+          "    ",
+          "    revDeltaMin:    #[$(revDeltaMin)]",
+          "    ",
+          "    revDeltaMax:    #[$(revDeltaMax)]",
+          "    ",
+          "    ",
+          "                    :: generated by a vsSolutionBuildEvent v#[$(vsSolutionBuildEvent)]",
+          "]",
+          "",
+          "#[( $(isCIBuild) ) { ",
+          "    #[IO replace.Regex(\"$(pDir)/E-MSBuild.csproj\", \"<BuildInfoVSSBE>[\\s\\S]*?</BuildInfoVSSBE>\", \"<BuildInfoVSSBE>$(buildInfo)</BuildInfoVSSBE>\")]",
+          "}else{",
+          "    #[IO replace.Regex(\"$(pDir)/E-MSBuild.csproj\", \"<BuildInfoVSSBE>[\\s\\S]*?</BuildInfoVSSBE>\", \"<BuildInfoVSSBE></BuildInfoVSSBE>\")]",
+          "}]"
+        ]
+      }
+    }
+  ],
+  "PostBuild": [
+    {
+      "Enabled": true,
+      "Name": "ActBinaries",
+      "Caption": "Binaries & tools ...",
+      "SupportMSBuild": true,
+      "SupportSBEScripts": true,
+      "IgnoreIfBuildFailed": true,
+      "BuildType": "Common",
+      "Confirmation": false,
+      "ToConfiguration": [],
+      "ExecutionOrder": {
+        "$type": "net.r_eg.vsSBE.Events.ExecutionOrder[], vsSolutionBuildEvent",
+        "$values": []
+      },
+      "Process": {
+        "$type": "net.r_eg.vsSBE.Events.EventProcess, vsSolutionBuildEvent",
+        "Waiting": true,
+        "Hidden": true,
+        "TimeLimit": 30
+      },
+      "Mode": {
+        "$type": "net.r_eg.vsSBE.Events.ModeScript, vsSolutionBuildEvent",
+        "Type": "Script",
+        "Command": "#[IO copy.directory(\"$(pDir)/bin/$(Configuration)/netstandard2.0\", \"$(dbin)/netstandard2.0/\", true, true)]\n#[IO copy.directory(\"$(pDir)/bin/$(Configuration)/net40\", \"$(dbin)/net40/\", true, true)]\n\n#[IO copy.file(\n            \"$(pDir)/bin/$(Configuration)/*$(pVer)*\", \n            \"$(dbin)/\", \n            true, \n            {\"*.nuspec\"})]\n\n",
+        "Command__": [
+          "#[IO copy.directory(\"$(pDir)/bin/$(Configuration)/netstandard2.0\", \"$(dbin)/netstandard2.0/\", true, true)]",
+          "#[IO copy.directory(\"$(pDir)/bin/$(Configuration)/net40\", \"$(dbin)/net40/\", true, true)]",
+          "",
+          "#[IO copy.file(",
+          "            \"$(pDir)/bin/$(Configuration)/*$(pVer)*\", ",
+          "            \"$(dbin)/\", ",
+          "            true, ",
+          "            {\"*.nuspec\"})]",
+          "",
+          ""
+        ]
+      }
+    }
+  ],
+  "CancelBuild": [],
+  "WarningsBuild": [],
+  "ErrorsBuild": [],
+  "OWPBuild": [],
+  "Transmitter": [],
+  "CommandEvent": [],
+  "Logging": [],
+  "SlnOpened": [],
+  "SlnClosed": []
+}

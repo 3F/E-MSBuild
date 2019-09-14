@@ -1,7 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Version>0.0.1.0</Version>
+    <Version>1.14.0</Version>
+    <BuildInfoVSSBE></BuildInfoVSSBE>
     <!-- <AssemblyVersion>0.0.1.0</AssemblyVersion> -->
     <!-- <FileVersion>0.0.1.0</FileVersion> -->
   </PropertyGroup>
@@ -35,6 +36,13 @@
       Read the documentation with examples.
       https://github.com/3F/E-MSBuild/blob/master/Readme.md
 
+    =======================================
+    gnt /p:ngpackages="EvMSBuild/$(Version)"
+    ================== https://github.com/3F/GetNuTool
+
+    Build info:
+
+    $(BuildInfoVSSBE)
     </Description>
     <PackageOwners>reg</PackageOwners>
     <PackageProjectUrl>https://github.com/3F/E-MSBuild</PackageProjectUrl>
@@ -67,13 +75,33 @@
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
-  </ItemGroup>
-  
-  <ItemGroup>
-    <ProjectReference Include="$(SolutionDir)\LSender\LSender\LSender.csproj" />
-    <ProjectReference Include="$(SolutionDir)\Varhead\Varhead\Varhead.csproj" />
+    <None Include="..\changelog.txt">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+    <None Include="..\.version">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="..\tools\hMSBuild.bat">
+      <Visible>false</Visible>
+      <Pack>True</Pack>
+      <PackagePath>tools\</PackagePath>
+    </None>
+    <None Include="..\tools\gnt.bat">
+      <Visible>false</Visible>
+      <Pack>True</Pack>
+      <PackagePath>tools\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Varhead\Varhead\Varhead.csproj" />
+  </ItemGroup>
+  
   <ItemGroup Condition=" '$(TargetFramework)' == 'net40' ">
     <Reference Include="Microsoft.Build" />
     <Reference Include="Microsoft.Build.Framework" />

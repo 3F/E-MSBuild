@@ -1,0 +1,16 @@
+E-MSBuild - https://github.com/3F/E-MSBuild
+_ _ _ _ _ 
+
+
+
+[1.14] 2019.09.??
+
+    * First public release of the E-MSBuild project. 
+      
+      Advanced Evaluator of MSBuild scripts with user-variables support through Varhead and more.
+      https://github.com/3F/E-MSBuild
+            
+      Previous changes can be found in:
+      https://github.com/3F/vsSolutionBuildEvent
+      
+      The number was based on latest changes for E-MSBuild part from vsSolutionBuildEvent project.

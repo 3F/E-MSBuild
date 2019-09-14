@@ -1,6 +1,3 @@
-[submodule "LSender"]
-	path = LSender
-	url = https://github.com/3F/LSender.git
 [submodule "Varhead"]
 	path = Varhead
 	url = https://github.com/3F/Varhead.git
