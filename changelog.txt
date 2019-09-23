@@ -2,8 +2,7 @@ E-MSBuild - https://github.com/3F/E-MSBuild
 _ _ _ _ _ 
 
 
-
-[1.14] 2019.09.??
+[1.14] 2019.09.23
 
     * First public release of the E-MSBuild project. 
       

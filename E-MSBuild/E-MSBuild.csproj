@@ -17,6 +17,8 @@
     <Title>[ E-MSBuild ] Advanced Evaluator of MSBuild scripts with user-variables support</Title>
     <Description>
     Advanced Evaluator of MSBuild scripts aka Advanced MSBuild with user-variables support through Varhead and more.
+
+    https://github.com/3F/E-MSBuild
     
       (name = "  - Platform is a (Platform)  ")
       (name += ( …:project ))
@@ -48,7 +50,7 @@
     <PackageProjectUrl>https://github.com/3F/E-MSBuild</PackageProjectUrl>
     <RepositoryUrl>https://github.com/3F/E-MSBuild</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageTags>scripts scripting variables strings expressions MSBuild evaluator parser SobaScript Varhead E-MSBuild vsSBE SBE-Scripts vsSolutionBuildEvent vsCommandEvent</PackageTags>
+    <PackageTags>scripts scripting variables strings expressions MSBuild evaluator parser SobaScript Varhead E-MSBuild vsSBE SBE-Scripts vsSolutionBuildEvent vsCommandEvent EvMSBuild</PackageTags>
     <PackageReleaseNotes>https://github.com/3F/E-MSBuild/blob/master/changelog.txt</PackageReleaseNotes>
     <Authors>github.com/3F/E-MSBuild</Authors>
     <DocumentationFile>$(OutputPath)\$(AssemblyName).xml</DocumentationFile>
