@@ -17,12 +17,12 @@ Advanced Evaluator of MSBuild scripts aka Advanced MSBuild with user-variables s
 Licensed under the [MIT License](https://github.com/3F/E-MSBuild/blob/master/License.txt)
 
 ```
-Copyright (c) 2013-2019  Denis Kuzmin < x-3F@outlook.com > GitHub/3F
+Copyright (c) 2013-2020  Denis Kuzmin < x-3F@outlook.com > GitHub/3F
 ```
 
 [ [ ☕ Donate ](https://3F.github.com/Donation/) ]
 
-E-MSBuild contributors: https://github.com/3F/E-MSBuild/graphs/contributors
+E-MSBuild contributors https://github.com/3F/E-MSBuild/graphs/contributors
 
 # Syntax and features
 

@@ -13,7 +13,7 @@
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Copyright>Copyright (c) 2013-2019  Denis Kuzmin &lt; x-3F@outlook.com &gt; GitHub/3F</Copyright>
+    <Copyright>Copyright (c) 2013-2020  Denis Kuzmin &lt; x-3F@outlook.com &gt; GitHub/3F</Copyright>
     <Title>[ E-MSBuild ] Advanced Evaluator of MSBuild scripts with user-variables support</Title>
     <Description>
     Advanced Evaluator of MSBuild scripts aka Advanced MSBuild with user-variables support through Varhead and more.
