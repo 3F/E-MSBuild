@@ -104,9 +104,28 @@ namespace net.r_eg.EvMSBuild
             {
                 if(!p.IsReservedProperty && !p.IsGlobalProperty)
                 {
-                    to.SetProperty(p.Name, p.UnevaluatedValue);
+                    if(!TrySet(p.Name, p.UnevaluatedValue, to)) {
+                        TrySet(p.Name, p.EvaluatedValue, to);
+                    }
                 }
             }
+        }
+
+        private bool TrySet(string name, string value, Project prj)
+        {
+            try
+            {
+                prj.SetProperty(name, value);
+                return true;
+            }
+            catch(Exception ex)
+            {
+                // TODO: 
+                // Some versions may not contain some function to process evaluation,
+                // eg. [MSBUILD]::GetDirectoryNameOfFileAbove
+                LSender.Send(this, $"`{name}` cannot be defined as `{value}` due to: {ex}", MsgLevel.Debug);
+            }
+            return false;
         }
 
         private bool Unload(Project prj)
