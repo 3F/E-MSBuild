@@ -11,7 +11,7 @@
     <TargetFrameworks>netstandard2.0;net40</TargetFrameworks>
     <RootNamespace>net.r_eg.EvMSBuild</RootNamespace>
     <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\com.github.3F.snk</AssemblyOriginatorKeyFile>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Copyright>Copyright (c) 2013-2020  Denis Kuzmin &lt; x-3F@outlook.com &gt; GitHub/3F</Copyright>
     <Title>[ E-MSBuild ] Advanced Evaluator of MSBuild scripts with user-variables support</Title>
@@ -42,8 +42,6 @@
     gnt /p:ngpackages="EvMSBuild/$(Version)"
     ================== https://github.com/3F/GetNuTool
 
-    Build info:
-
     $(BuildInfoVSSBE)
     </Description>
     <PackageOwners>reg</PackageOwners>
@@ -53,7 +51,7 @@
     <PackageTags>scripts scripting variables strings expressions MSBuild evaluator parser SobaScript Varhead E-MSBuild vsSBE SBE-Scripts vsSolutionBuildEvent vsCommandEvent EvMSBuild</PackageTags>
     <PackageReleaseNotes>https://github.com/3F/E-MSBuild/blob/master/changelog.txt</PackageReleaseNotes>
     <Authors>github.com/3F/E-MSBuild</Authors>
-    <DocumentationFile>$(OutputPath)\$(AssemblyName).xml</DocumentationFile>
+    <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
     <PackageLicenseFile>License.txt</PackageLicenseFile>
     <Configurations>DBG_SDK10;DBG_SDK15;REL_SDK10;REL_SDK15;DCI_SDK10;DCI_SDK15;RCI_SDK10;RCI_SDK15</Configurations>
     <NoWarn>1701;1702;CS1591</NoWarn>
@@ -66,6 +64,10 @@
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' Or $(Configuration.Contains('REL_')) Or $(Configuration.Contains('RCI_')) ">
     <DefineConstants />
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <NoDefaultExcludes>true</NoDefaultExcludes> <!-- NU5119: ..\.version -->
   </PropertyGroup>
 
   <ItemGroup>

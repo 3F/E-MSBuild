@@ -1,5 +1,6 @@
 # Specific
 
+/E-MSBuild/E-MSBuild.xml
 /E-MSBuildTest/Appveyor.TestLogger*
 
 # ...
