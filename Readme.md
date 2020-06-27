@@ -5,12 +5,12 @@
 Advanced Evaluator of MSBuild scripts aka Advanced MSBuild with user-variables support through [Varhead](https://github.com/3F/Varhead) and more.
 
 [![Build status](https://ci.appveyor.com/api/projects/status/364cy45ed94gwmto/branch/master?svg=true)](https://ci.appveyor.com/project/3Fs/e-msbuild/branch/master)
-[![release-src](https://img.shields.io/github/release/3F/E-MSBuild.svg)](https://github.com/3F/E-MSBuild/releases/latest)
-[![License](https://img.shields.io/badge/License-MIT-74A5C2.svg)](https://github.com/3F/E-MSBuild/blob/master/License.txt)
-[![NuGet package](https://img.shields.io/nuget/v/E-MSBuild.svg)](https://www.nuget.org/packages/E-MSBuild/)
-[![Tests](https://img.shields.io/appveyor/tests/3Fs/e-msbuild/master.svg)](https://ci.appveyor.com/project/3Fs/e-msbuild/build/tests)
+[![release-src](https://img.shields.io/github/release/3F/E-MSBuild)](https://github.com/3F/E-MSBuild/releases/latest)
+[![License](https://img.shields.io/badge/License-MIT-74A5C2)](https://github.com/3F/E-MSBuild/blob/master/License.txt)
+[![NuGet package](https://img.shields.io/nuget/v/E-MSBuild)](https://www.nuget.org/packages/E-MSBuild/)
+[![Tests](https://img.shields.io/appveyor/tests/3Fs/e-msbuild/master)](https://ci.appveyor.com/project/3Fs/e-msbuild/build/tests)
 
-[![Build history](https://buildstats.info/appveyor/chart/3Fs/e-msbuild?buildCount=20&showStats=true)](https://ci.appveyor.com/project/3Fs/e-msbuild/history)
+[![Build history](https://buildstats.info/appveyor/chart/3Fs/e-msbuild?buildCount=20&includeBuildsFromPullRequest=true&showStats=true)](https://ci.appveyor.com/project/3Fs/e-msbuild/history)
 
 ## License
 

@@ -71,22 +71,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="..\License.txt">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
-    <None Include="..\Readme.md">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
-    <None Include="..\changelog.txt">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
-    <None Include="..\.version">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
+    <None Include="..\License.txt" Pack="True" PackagePath=""/>
+    <None Include="..\Readme.md" Pack="True" PackagePath=""/>
+    <None Include="..\changelog.txt" Pack="True" PackagePath=""/>
+    <None Include="..\.version" Pack="True" PackagePath=""/>
+    <None Include="..\.release.version" Pack="True" PackagePath=""/>
+    <None Include="..\3rd-party-NOTICES.txt" Pack="True" PackagePath=""/>
   </ItemGroup>
 
   <ItemGroup>

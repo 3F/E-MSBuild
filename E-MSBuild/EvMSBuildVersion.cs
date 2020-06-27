@@ -13,11 +13,9 @@ namespace net.r_eg.EvMSBuild
 
         public const string S_NUM_REV = S_NUM + "." + S_REV;
 
-        public const string B_SHA1 = "-";
-        public const string B_NAME = "-";
-        public const string B_REVC = "-";
+        public const string B_SHA1 = "";
 
-        internal const string S_INFO      = S_NUM_REV + "+" + B_SHA1;
-        internal const string S_INFO_FULL = S_INFO + ":" + B_NAME + "-" + B_REVC;
+        internal const string S_PRODUCT = S_NUM_REV + "";
+        internal const string S_INFO    = S_PRODUCT + "+" + B_SHA1;
     }
 }
