@@ -1,0 +1,38 @@
+<Project>
+  <PropertyGroup>
+    <RepoDirRoot>..\..\..\</RepoDirRoot>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <OutputPath>..\bin\$(MSBuildProjectName)\</OutputPath>
+    <IntermediateOutputPath>..\obj\$(MSBuildProjectName)\</IntermediateOutputPath>
+    <EnableDefaultItems>false</EnableDefaultItems>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;net40</TargetFrameworks>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>$(RepoDirRoot)com.github.3F.snk</AssemblyOriginatorKeyFile>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <Copyright>Copyright (c) 2013-2020  Denis Kuzmin &lt; x-3F@outlook.com &gt; GitHub/3F</Copyright>
+    <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
+    <Configurations>Debug;Release;PublicRelease</Configurations>
+    <NoWarn>1701;1702;CS1591</NoWarn>
+    <LangVersion>latest</LangVersion>
+    <NoDefaultExcludes>true</NoDefaultExcludes> <!-- NU5119: ..\.version -->
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug' Or $(Configuration.Contains('DBG_')) Or $(Configuration.Contains('DCI_'))">
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)' == 'Release' Or '$(Configuration)' == 'PublicRelease' Or $(Configuration.Contains('REL_')) Or $(Configuration.Contains('RCI_'))">
+    <DefineConstants />
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+
+</Project>

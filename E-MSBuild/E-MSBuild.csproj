@@ -1,10 +1,9 @@
-<Project Sdk="Microsoft.NET.Sdk">
+<Project>
+  <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" Condition="'$(TurnOffSdkImport)'!='true'" />
 
   <PropertyGroup>
     <Version>1.14.0</Version>
     <BuildInfoVSSBE></BuildInfoVSSBE>
-    <!-- <AssemblyVersion>0.0.1.0</AssemblyVersion> -->
-    <!-- <FileVersion>0.0.1.0</FileVersion> -->
   </PropertyGroup>
 
   <PropertyGroup>
@@ -53,21 +52,23 @@
     <Authors>github.com/3F/E-MSBuild</Authors>
     <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
     <PackageLicenseFile>License.txt</PackageLicenseFile>
-    <Configurations>DBG_SDK10;DBG_SDK15;REL_SDK10;REL_SDK15;DCI_SDK10;DCI_SDK15;RCI_SDK10;RCI_SDK15</Configurations>
+    <Configurations>Debug;Release;PublicRelease</Configurations>
     <NoWarn>1701;1702;CS1591</NoWarn>
+    <NoDefaultExcludes>true</NoDefaultExcludes>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
-  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' Or $(Configuration.Contains('DBG_')) Or $(Configuration.Contains('DCI_')) ">
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug' Or $(Configuration.Contains('DBG_')) Or $(Configuration.Contains('DCI_'))">
     <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
   </PropertyGroup>
 
-  <PropertyGroup Condition=" '$(Configuration)' == 'Release' Or $(Configuration.Contains('REL_')) Or $(Configuration.Contains('RCI_')) ">
+  <PropertyGroup Condition="'$(Configuration)' == 'Release' Or '$(Configuration)' == 'PublicRelease' Or $(Configuration.Contains('REL_')) Or $(Configuration.Contains('RCI_'))">
     <DefineConstants />
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <NoDefaultExcludes>true</NoDefaultExcludes> <!-- NU5119: ..\.version -->
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
   </PropertyGroup>
 
   <ItemGroup>
@@ -92,8 +93,13 @@
     </None>
   </ItemGroup>
 
+  <PropertyGroup>
+    <ProjectReferenceLSender Condition="'$(ProjectReferenceLSender)'==''">..\inc\modules\LSender\LSender.csproj</ProjectReferenceLSender>
+    <ProjectReferenceVarhead Condition="'$(ProjectReferenceVarhead)'==''">..\inc\modules\Varhead\Varhead.csproj</ProjectReferenceVarhead>
+  </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Varhead\Varhead\Varhead.csproj" />
+    <ProjectReference Include="$(ProjectReferenceLSender)" />
+    <ProjectReference Include="$(ProjectReferenceVarhead)" />
   </ItemGroup>
   
   <ItemGroup Condition=" '$(TargetFramework)' == 'net40' ">
@@ -105,4 +111,5 @@
     <PackageReference Include="Microsoft.Build.Framework" Version="16.0.461" />
   </ItemGroup>
 
+  <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" Condition="'$(TurnOffSdkImport)'!='true'" />
 </Project>
