@@ -1,7 +1,31 @@
 E-MSBuild - https://github.com/3F/E-MSBuild
-_ _ _ _ _ 
+- - - - - - - - - - - - - - - - - - - - - -
 
+[1.14.1] 2020.07.31
 
+    * FIXED: Fixed possible "[MSBuild]::GetDirectoryNameOfFileAbove('', sdkmanifest.xml)" cannot be evaluated.
+             When msbuild 16.0 and:
+             ```
+             WindowsSdkDir = $([MSBUILD]::GetDirectoryNameOfFileAbove('$(MSBUILDTHISFILEDIRECTORY)', 'sdkmanifest.xml'))\
+             ```
+             
+    * CHANGED: Updated LSender 1.15
+               https://github.com/3F/LSender/releases/tag/1.15
+               
+    * CHANGED: Updated package tools:
+    
+               GetNuTool 1.8
+               https://github.com/3F/GetNuTool/releases/tag/1.8
+               
+               hMSBuild 2.3
+               https://github.com/3F/hMSBuild/releases/tag/v2.3
+               
+    * KNOWN: Compatibility with Microsoft.Build 16+. Issue #1
+             
+             Expected that IeXod will replace this component soon
+             https://github.com/3F/IeXod
+             
+             
 [1.14] 2019.09.23
 
     * First public release of the E-MSBuild project. 

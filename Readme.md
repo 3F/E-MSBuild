@@ -4,6 +4,8 @@
 
 Advanced Evaluator of MSBuild scripts aka Advanced MSBuild with user-variables support through [Varhead](https://github.com/3F/Varhead) and more.
 
+It is actively used in projects such as [vsSolutionBuildEvent](https://github.com/3F/vsSolutionBuildEvent), [SobaScript](https://github.com/3F/SobaScript), [vsCommandEvent](https://github.com/3F/vsCommandEvent),
+
 [![Build status](https://ci.appveyor.com/api/projects/status/364cy45ed94gwmto/branch/master?svg=true)](https://ci.appveyor.com/project/3Fs/e-msbuild/branch/master)
 [![release-src](https://img.shields.io/github/release/3F/E-MSBuild)](https://github.com/3F/E-MSBuild/releases/latest)
 [![License](https://img.shields.io/badge/License-MIT-74A5C2)](https://github.com/3F/E-MSBuild/blob/master/License.txt)

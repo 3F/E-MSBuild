@@ -2,7 +2,7 @@
   <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" Condition="'$(TurnOffSdkImport)'!='true'" />
 
   <PropertyGroup>
-    <Version>1.14.0</Version>
+    <Version>1.14.1</Version>
     <BuildInfoVSSBE></BuildInfoVSSBE>
   </PropertyGroup>
 
