@@ -107,8 +107,8 @@
     <Reference Include="Microsoft.Build.Framework" />
   </ItemGroup>
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
-    <PackageReference Include="Microsoft.Build" Version="16.6.0" />
-    <PackageReference Include="Microsoft.Build.Framework" Version="16.6.0" />
+    <PackageReference Include="Microsoft.Build" Version="15.9.20" /> <!-- 16.0.461: net472, netcore2.1 -->
+    <PackageReference Include="Microsoft.Build.Framework" Version="16.0.461" />
   </ItemGroup>
 
   <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" Condition="'$(TurnOffSdkImport)'!='true'" />
